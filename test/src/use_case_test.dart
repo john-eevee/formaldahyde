@@ -1,12 +1,11 @@
 import 'package:formaldehyde/src/formaldehyde.dart';
-import 'package:test/expect.dart';
+import 'package:test/test.dart';
 
 sealed class SignupFormError extends ValidationError<SignupFormKeys> {
   const SignupFormError({required super.field});
 
   @override
   List<Object?> get props => [super.field];
-
 }
 
 class FirstNameRequiredError extends SignupFormError {
@@ -98,3 +97,13 @@ final form = Form<SignupFormKeys>(
     ),
   },
 );
+
+void main() {
+  test('password and confirm password must match', () async {
+    final filledPasswords = await form.addChanges([
+      const Change(SignupFormKeys.password, '123456'),
+      const Change(SignupFormKeys.confirmPassword, '123456'),
+    ]).apply();
+    expect(filledPasswords.errors[SignupFormKeys.confirmPassword], isNull);
+  });
+}

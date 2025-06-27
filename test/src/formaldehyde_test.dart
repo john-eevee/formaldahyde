@@ -151,7 +151,7 @@ void main() {
     // --- Raw Constructor ---
     group('.raw()', () {
       test('creates a field definition', () {
-        final field = FieldDefinition.raw(
+        final field = FieldDefinitionifinition.raw(
           name: TestFormKeys.customField,
           isRequired: true,
           defaultValue: () => 'default',
@@ -169,7 +169,7 @@ void main() {
     // --- String Factory ---
     group('.string()', () {
       test('creates a string field', () {
-        final field = FieldDefinition.string<TestFormKeys>(
+        final field = FieldDefinitionifinition.string<TestFormKeys>(
           name: TestFormKeys.name,
           isRequired: true,
           defaultValue: () => 'Default Name',
@@ -185,15 +185,15 @@ void main() {
       });
 
       test('parser trims whitespace', () {
-        final field =
-            FieldDefinition.string<TestFormKeys>(name: TestFormKeys.name);
+        final field = FieldDefinitionifinition.string<TestFormKeys>(
+            name: TestFormKeys.name);
         expect(field.parser('  hello world  '), 'hello world');
         expect(field.parser('  '), '');
       });
 
       test('parser handles null input for non-nullable string', () {
-        final field =
-            FieldDefinition.string<TestFormKeys>(name: TestFormKeys.name);
+        final field = FieldDefinitionifinition.string<TestFormKeys>(
+            name: TestFormKeys.name);
         expect(
           field.parser(null),
           '',
@@ -203,7 +203,7 @@ void main() {
       test(
           'parser handles null input with defaultValue for non-nullable string',
           () {
-        final field = FieldDefinition.string<TestFormKeys>(
+        final field = FieldDefinitionifinition.string<TestFormKeys>(
           name: TestFormKeys.name,
           defaultValue: () => "def",
         );
@@ -214,7 +214,7 @@ void main() {
     // --- Integer Factory ---
     group('.integer()', () {
       test('creates an integer field', () {
-        final field = FieldDefinition.integer<TestFormKeys>(
+        final field = FieldDefinitionifinition.integer<TestFormKeys>(
           name: TestFormKeys.age,
           isRequired: false,
           defaultValue: () => 18,
@@ -229,15 +229,15 @@ void main() {
       });
 
       test('parser throws FormatException for invalid int', () {
-        final field =
-            FieldDefinition.integer<TestFormKeys>(name: TestFormKeys.age);
+        final field = FieldDefinitionifinition.integer<TestFormKeys>(
+            name: TestFormKeys.age);
         expect(() => field.parser('abc'), throwsA(isA<FormatException>()));
         expect(() => field.parser('12.34'), throwsA(isA<FormatException>()));
       });
 
       test('parser uses defaultValue if parsing fails and default is provided',
           () {
-        final field = FieldDefinition.integer<TestFormKeys>(
+        final field = FieldDefinitionifinition.integer<TestFormKeys>(
           name: TestFormKeys.age,
           defaultValue: () => 0,
         );
@@ -247,8 +247,8 @@ void main() {
       test(
           'parser throws FormatException for null when no default and non-nullable',
           () {
-        final field =
-            FieldDefinition.integer<TestFormKeys>(name: TestFormKeys.age);
+        final field = FieldDefinitionifinition.integer<TestFormKeys>(
+            name: TestFormKeys.age);
         expect(() => field.parser(null), throwsA(isA<FormatException>()));
       });
     });
@@ -256,7 +256,7 @@ void main() {
     // --- FloatPoint (Double) Factory ---
     group('.floatPoint()', () {
       test('creates a double field', () {
-        final field = FieldDefinition.floatPoint<TestFormKeys>(
+        final field = FieldDefinitionifinition.floatPoint<TestFormKeys>(
           name: TestFormKeys.price,
           isRequired: true,
           validator: (val, form) =>
@@ -270,8 +270,8 @@ void main() {
       });
 
       test('parser throws FormatException for invalid double', () {
-        final field =
-            FieldDefinition.floatPoint<TestFormKeys>(name: TestFormKeys.price);
+        final field = FieldDefinitionifinition.floatPoint<TestFormKeys>(
+            name: TestFormKeys.price);
         expect(() => field.parser('abc'), throwsA(isA<FormatException>()));
         expect(
           () => field.parser('3,14'),
@@ -281,7 +281,7 @@ void main() {
 
       test('parser uses defaultValue if parsing fails and default is provided',
           () {
-        final field = FieldDefinition.floatPoint<TestFormKeys>(
+        final field = FieldDefinitionifinition.floatPoint<TestFormKeys>(
           name: TestFormKeys.price,
           defaultValue: () => 0.0,
         );
@@ -291,8 +291,8 @@ void main() {
       test(
           'parser throws FormatException for null when no default and non-nullable',
           () {
-        final field =
-            FieldDefinition.floatPoint<TestFormKeys>(name: TestFormKeys.price);
+        final field = FieldDefinitionifinition.floatPoint<TestFormKeys>(
+            name: TestFormKeys.price);
         expect(() => field.parser(null), throwsA(isA<FormatException>()));
       });
     });
@@ -300,7 +300,7 @@ void main() {
     // --- NullableString Factory ---
     group('.nullableString()', () {
       test('creates a nullable string field', () {
-        final field = FieldDefinition.nullableString<TestFormKeys>(
+        final field = FieldDefinitionifinition.nullableString<TestFormKeys>(
           name: TestFormKeys.middleName,
           validator: (val, form) =>
               validateMaxLength(val, form, TestFormKeys.middleName, 10),
@@ -317,7 +317,7 @@ void main() {
     // --- NullableInteger Factory ---
     group('.nullableInteger()', () {
       test('creates a nullable integer field', () {
-        final field = FieldDefinition.nullableInteger<TestFormKeys>(
+        final field = FieldDefinitionifinition.nullableInteger<TestFormKeys>(
           name: TestFormKeys.optionalScore,
         );
         expect(field.name, TestFormKeys.optionalScore);
@@ -332,7 +332,7 @@ void main() {
     // --- NullableDouble Factory ---
     group('.nullableDouble()', () {
       test('creates a nullable double field', () {
-        final field = FieldDefinition.nullableDouble<TestFormKeys>(
+        final field = FieldDefinitionifinition.nullableDouble<TestFormKeys>(
           name: TestFormKeys.optionalMeasurement,
         );
         expect(field.name, TestFormKeys.optionalMeasurement);
@@ -346,31 +346,27 @@ void main() {
 
     // --- Validate Method ---
     group('.validate()', () {
-      final emptyForm = Form<TestFormKeys>.internal(
-        fields: const {},
-        changes: const {},
-        values: const {},
-        errors: const {},
-      );
-      final nameFieldRequired = FieldDefinition.string<TestFormKeys>(
+      final nameFieldRequired = FieldDefinitionifinition.string<TestFormKeys>(
         name: TestFormKeys.name,
         isRequired: true,
       );
-      final ageFieldOptional = FieldDefinition.integer<TestFormKeys>(
+      final ageFieldOptional = FieldDefinitionifinition.integer<TestFormKeys>(
         name: TestFormKeys.age,
         isRequired: false,
       );
-      final emailFieldWithValidator = FieldDefinition.string<TestFormKeys>(
+      final emailFieldWithValidator =
+          FieldDefinitionifinition.string<TestFormKeys>(
         name: TestFormKeys.email,
         validator: validateEmail,
       );
-      FieldDefinition.string<TestFormKeys>(
+      FieldDefinitionifinition.string<TestFormKeys>(
         name: TestFormKeys.fieldWithDefault,
         defaultValue: () => "default_val",
         isRequired:
             false, // Can be true or false, default value takes precedence if change is null
       );
-      final requiredFieldWithDefault = FieldDefinition.string<TestFormKeys>(
+      final requiredFieldWithDefault =
+          FieldDefinitionifinition.string<TestFormKeys>(
         name: TestFormKeys.fieldWithDefault,
         defaultValue: () => "default_val",
         isRequired: true,
@@ -379,7 +375,8 @@ void main() {
       test(
           'returns IsRequired error if required and change is null and no default',
           () async {
-        final errors = await nameFieldRequired.validate(null, emptyForm);
+        final form = Form(fields: {nameFieldRequired});
+        final errors = await nameFieldRequired.validate(null, form);
         expect(errors, isNotEmpty);
         expect(errors.first, isA<IsRequired>());
         expect((errors.first as IsRequired).field, TestFormKeys.name);
@@ -388,26 +385,30 @@ void main() {
       test(
           'returns no error if required, change is null, but defaultValue is provided',
           () async {
-        final errors = await requiredFieldWithDefault.validate(null, emptyForm);
+        final form = Form(fields: {requiredFieldWithDefault});
+        final errors = await requiredFieldWithDefault.validate(null, form);
         expect(errors, isEmpty);
       });
 
       test('returns no error if not required and change is null', () async {
-        final errors = await ageFieldOptional.validate(null, emptyForm);
+        final form = Form(fields: {ageFieldOptional});
+        final errors = await ageFieldOptional.validate(null, form);
         expect(errors, isEmpty);
       });
 
       test('returns validator errors if validator fails', () async {
+        final form = Form(fields: {emailFieldWithValidator});
         final errors =
-            await emailFieldWithValidator.validate('invalid-email', emptyForm);
+            await emailFieldWithValidator.validate('invalid-email', form);
         expect(errors, isNotEmpty);
         expect(errors.first, isA<InvalidEmailError>());
       });
 
       test('returns no errors if validator passes', () async {
+        final form = Form(fields: {emailFieldWithValidator});
         final errors = await emailFieldWithValidator.validate(
           'valid@email.com',
-          emptyForm,
+          form,
         );
         expect(errors, isEmpty);
       });
@@ -426,25 +427,26 @@ void main() {
           };
         }
 
-        final field = FieldDefinition.string<TestFormKeys>(
+        final field = FieldDefinitionifinition.string<TestFormKeys>(
           name: TestFormKeys.fieldWithDefault,
           defaultValue: () => "default_val",
           validator: failingValidator,
         );
+        final form = Form(fields: {field});
         final errors = await field.validate(
           null,
-          emptyForm,
+          form,
         ); // change is null, defaultValue will be used
         expect(errors, isEmpty);
 
-        final errorsWithChange = await field.validate("other_value", emptyForm);
+        final errorsWithChange = await field.validate("other_value", form);
         expect(errorsWithChange, isNotEmpty);
         expect(errorsWithChange.first, isA<MinLengthError>());
       });
 
       test('validator receives parsed value', () async {
         bool validatorCalledWithCorrectType = false;
-        final field = FieldDefinition.integer<TestFormKeys>(
+        final field = FieldDefinitionifinition.integer<TestFormKeys>(
           name: TestFormKeys.age,
           validator: (int? value, Form<TestFormKeys> form) async {
             if (value == 25) {
@@ -454,13 +456,14 @@ void main() {
             return {};
           },
         );
-        await field.validate('25', emptyForm);
+        final form = Form(fields: {field});
+        await field.validate('25', form);
         expect(validatorCalledWithCorrectType, isTrue);
       });
     });
     // --- toString Method ---
     test('.toString()', () {
-      final field1 = FieldDefinition.string<TestFormKeys>(
+      final field1 = FieldDefinitionifinition.string<TestFormKeys>(
         name: TestFormKeys.name,
         isRequired: true,
       );
@@ -469,7 +472,7 @@ void main() {
         'FieldDefinition{name: TestFormKeys.name, isRequired: true, hasDefaultValue: false, hasValidator: false}',
       );
 
-      final field2 = FieldDefinition.integer<TestFormKeys>(
+      final field2 = FieldDefinitionifinition.integer<TestFormKeys>(
         name: TestFormKeys.age,
         defaultValue: () => 0,
         validator: (v, f) async => {},
@@ -482,28 +485,28 @@ void main() {
 
     // --- Equatable Props ---
     test('props for equality', () {
-      final field1 = FieldDefinition.string<TestFormKeys>(
+      final field1 = FieldDefinitionifinition.string<TestFormKeys>(
         name: TestFormKeys.name,
         isRequired: true,
       );
-      final field2 = FieldDefinition.string<TestFormKeys>(
+      final field2 = FieldDefinitionifinition.string<TestFormKeys>(
         name: TestFormKeys.name,
         isRequired: true,
       );
-      final field3 = FieldDefinition.string<TestFormKeys>(
+      final field3 = FieldDefinitionifinition.string<TestFormKeys>(
         name: TestFormKeys.email,
         isRequired: true,
       );
-      final field4 = FieldDefinition.string<TestFormKeys>(
+      final field4 = FieldDefinitionifinition.string<TestFormKeys>(
         name: TestFormKeys.name,
         isRequired: false,
       );
-      final field5 = FieldDefinition.string<TestFormKeys>(
+      final field5 = FieldDefinitionifinition.string<TestFormKeys>(
         name: TestFormKeys.name,
         isRequired: true,
         defaultValue: () => "a",
       );
-      final field6 = FieldDefinition.string<TestFormKeys>(
+      final field6 = FieldDefinitionifinition.string<TestFormKeys>(
         name: TestFormKeys.name,
         isRequired: true,
         defaultValue: () => "a",
@@ -525,20 +528,22 @@ void main() {
   });
 
   group('Form', () {
-    final nameField = FieldDefinition.string<TestFormKeys>(
+    final nameField = FieldDefinitionifinition.string<TestFormKeys>(
       name: TestFormKeys.name,
       isRequired: true,
       validator: (v, f) => validateMinLength(v, f, TestFormKeys.name, 2),
     );
-    final ageField = FieldDefinition.integer<TestFormKeys>(
+    final ageField = FieldDefinitionifinition.integer<TestFormKeys>(
       name: TestFormKeys.age,
       validator: (v, f) => validatePositiveInt(v, f, TestFormKeys.age),
     );
-    final emailFieldOptional = FieldDefinition.nullableString<TestFormKeys>(
+    final emailFieldOptional =
+        FieldDefinitionifinition.nullableString<TestFormKeys>(
       name: TestFormKeys.email,
       validator: validateEmail,
     );
-    final priceFieldWithDefault = FieldDefinition.floatPoint<TestFormKeys>(
+    final priceFieldWithDefault =
+        FieldDefinitionifinition.floatPoint<TestFormKeys>(
       name: TestFormKeys.price,
       defaultValue: () => 0.0,
       isRequired: false,
@@ -568,7 +573,7 @@ void main() {
       expect(form.hasErrors, isFalse);
     });
 
-    test('.change() updates changes map', () {
+    test('.addChange() updates changes map', () {
       form = form.addChange(const Change(TestFormKeys.name, 'Jo'));
       expect(form.changes[TestFormKeys.name], 'Jo');
       form = form.addChange(const Change(TestFormKeys.age, 30));
@@ -577,30 +582,11 @@ void main() {
       expect(form.errors, isEmpty);
     });
 
-    test('.changeOf() and .changeOfNullable()', () {
-      form = form.addChange(const Change(TestFormKeys.name, 'John'));
-      form = form.addChange(
-        const Change(TestFormKeys.age, null),
-      ); // for nullableInteger
-      form =
-          form.addChange(const Change(TestFormKeys.email, 'test@example.com'));
-
-      expect(form.changeOf<String>(TestFormKeys.name), 'John');
-      expect(form.changeOfNullable<String>(TestFormKeys.name), 'John');
-
-      expect(form.changeOfNullable<int>(TestFormKeys.age), isNull);
-      expect(() => form.changeOf<int>(TestFormKeys.age), throwsArgumentError);
-
+    test('addChange dont accept null as value for non-null fields', () {
       expect(
-        form.changeOfNullable<String>(TestFormKeys.email),
-        'test@example.com',
+        () => form.addChange(Change(TestFormKeys.age, null)),
+        throwsException,
       );
-      expect(form.changeOf<String>(TestFormKeys.email), 'test@example.com');
-
-      expect(
-        form.changeOfNullable<double>(TestFormKeys.price),
-        isNull,
-      ); // Not changed yet
     });
 
     group('.apply()', () {
@@ -647,6 +633,7 @@ void main() {
         expect(appliedForm.errors, isNotEmpty);
         expect(appliedForm.hasErrors, isTrue);
         expect(appliedForm.errors[TestFormKeys.name], isNotNull);
+        expect(appliedForm.errors[TestFormKeys.name]!.length, equals(2));
         expect(appliedForm.errors[TestFormKeys.name]!.first, isA<IsRequired>());
         expect(
           appliedForm.values,
@@ -735,7 +722,8 @@ void main() {
 
       test('apply populates default values if not changed and no errors',
           () async {
-        final fieldWithDefaultOnly = FieldDefinition.string<TestFormKeys>(
+        final fieldWithDefaultOnly =
+            FieldDefinitionifinition.string<TestFormKeys>(
           name: TestFormKeys.customField,
           defaultValue: () => "my_default",
           isRequired: false,
@@ -812,7 +800,7 @@ void main() {
 
   group('validateMany', () {
     final form = Form<TestFormKeys>(
-      fields: const {},
+      fields: {FieldDefinitionifinition.string(name: TestFormKeys.name)},
     ); // Dummy form for validator signature
 
     Future<Set<ValidationError<TestFormKeys>>> validator1(
