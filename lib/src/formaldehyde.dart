@@ -128,9 +128,7 @@ class Form<FK extends Enum> extends Equatable {
   /// ```
   Form<FK> addChange(FieldChange<FK> change) {
     final newChanges = Map<FK, dynamic>.from(_changes);
-    newChanges[change.field] = _fields
-        .firstWhere((f) => f.name == change.field)
-        .parser(change.value); // Parse the value immediately
+    newChanges[change.field] = change.value;
 
     return Form.internal(
       fields: _fields,
