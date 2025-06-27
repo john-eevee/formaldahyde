@@ -123,7 +123,7 @@ class Form<FK extends Enum> extends Equatable {
   /// enum MyFormKeys { name }
   /// final nameField = FieldDefinition.string(name: MyFormKeys.name);
   /// var form = Form<MyFormKeys>(fields: {nameField});
-  /// form = form.change(field: MyFormKeys.name, value: 'Jane Doe');
+  /// form = form.change(FieldChange(MyFormKeys.name, 'Jane Doe'));
   /// print(form.changes[MyFormKeys.name]); // Output: Jane Doe
   /// ```
   Form<FK> addChange(FieldChange<FK> change) {
