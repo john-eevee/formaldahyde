@@ -138,13 +138,6 @@ class Form<FK extends Enum> extends Equatable {
     );
   }
 
-  /// Updates the form with multiple changes at once.
-  /// See [addChange] for details on how changes are applied.
-  Form<FK> addChanges(List<FieldChange<FK>> changes) {
-    assert(changes.isNotEmpty, 'Changes should not be empty');
-    return changes.fold(this, (form, change) => this.addChange(change));
-  }
-
   /// Returns the current change value of the specified field.
   ///
   /// This method returns the value that the field [field] is being changed to.
