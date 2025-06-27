@@ -471,7 +471,7 @@ void main() {
       );
       expect(
         field1.toString(),
-        'FieldDefinition{name: TestFormKeys.name, isRequired: true, hasDefaultValue: false, hasValidator: false}',
+        'FieldDefinition{name: TestFormKeys.name, isRequired: true, hasDefaultValue: false, hasValidator: true}',
       );
 
       final field2 = FieldDefinition.integer<TestFormKeys>(
@@ -631,7 +631,8 @@ void main() {
         expect(appliedForm.errors, isNotEmpty);
         expect(appliedForm.hasErrors, isTrue);
         expect(appliedForm.errors[TestFormKeys.name], isNotNull);
-        expect(appliedForm.errors[TestFormKeys.name]!.length, equals(2));
+        // required fields bail if null or empty
+        expect(appliedForm.errors[TestFormKeys.name]!.length, equals(1));
         expect(appliedForm.errors[TestFormKeys.name]!.first, isA<IsRequired>());
         expect(
           appliedForm.values,
