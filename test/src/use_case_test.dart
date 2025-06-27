@@ -101,8 +101,8 @@ final form = Form<SignupFormKeys>(
 void main() {
   test('password and confirm password must match', () async {
     final filledPasswords = await form.addChanges([
-      const Change(SignupFormKeys.password, '123456'),
-      const Change(SignupFormKeys.confirmPassword, '123456'),
+      const FieldChange(SignupFormKeys.password, '123456'),
+      const FieldChange(SignupFormKeys.confirmPassword, '123456'),
     ]).apply();
     expect(filledPasswords.errors[SignupFormKeys.confirmPassword], isNull);
   });

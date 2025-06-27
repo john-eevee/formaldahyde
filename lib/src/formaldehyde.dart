@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 /// A library for managing form state, validation, and data parsing in Dart.
 ///
 /// Provides classes and utilities to define form fields, handle input changes,
@@ -115,8 +116,7 @@ class Form<FK extends Enum> extends Equatable {
   /// This method records the change but does not immediately validate or apply it.
   /// Returns a new [Form] instance with the updated changes.
   ///
-  /// - [field]: The `FK` enum value representing the field to change.
-  /// - [value]: The new raw value for the field.
+  /// - [change]: The change to be added to the form.
   ///
   /// Example:
   /// ```dart
@@ -140,6 +140,8 @@ class Form<FK extends Enum> extends Equatable {
     );
   }
 
+  /// Updates the form with multiple changes at once.
+  /// See [addChange] for details on how changes are applied.
   Form<FK> addChanges(List<FieldChange<FK>> changes) {
     assert(changes.isNotEmpty, 'Changes should not be empty');
     return changes.fold(this, (form, change) => this.addChange(change));
@@ -152,7 +154,7 @@ class Form<FK extends Enum> extends Equatable {
   /// before the change is committed.
   ///
   /// Example:
-  /// ```
+  /// ```dart
   /// final newValue = changeOf<String>(MyFormFields.name);
   /// ```
   ///
@@ -335,17 +337,22 @@ class Form<FK extends Enum> extends Equatable {
   }
 }
 
+/// Represents a change to a specific field in the form.
 class FieldChange<FK> extends Equatable {
+  /// Creates a [FieldChange] for the given [field] and [value].
   const FieldChange(this.field, this.value);
 
+  /// The field key (`FK`) that this change applies to.
   final FK field;
 
+  /// The new value for the field.
   final dynamic value;
 
   @override
   List<Object?> get props => [field, value];
 }
 
+/// A validation error indicating that a required field is missing a value.
 class IsRequired<FK extends Enum> extends ValidationError<FK> {
   /// Creates an [IsRequired] error for the given [field].
   const IsRequired({required super.field});
