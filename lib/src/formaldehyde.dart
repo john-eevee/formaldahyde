@@ -668,7 +668,13 @@ class FieldDefinition<T, FK extends Enum> extends Equatable {
     return FieldDefinition.raw(
       name: name,
       isRequired: isRequired,
-      validator: validator,
+      validator: (value, form) async {
+        if (value.isEmpty && isRequired) {
+          return {IsRequired(field: name)};
+        } else {
+          return validator?.call(value, form) ?? {};
+        }
+      },
       defaultValue: defaultValue,
       parser: (rawValue) {
         if (rawValue is String) {
