@@ -107,6 +107,9 @@ class Form<FK extends Enum> extends Equatable {
   /// Returns an indicator if the form contains any errors;
   bool get hasErrors => _errors.isNotEmpty;
 
+  /// Returns an indicator if the form is valid.
+  bool get isValid => !hasErrors && _values.isNotEmpty;
+
   /// Updates the form with a new value for a specific field.
   ///
   /// This method records the change but does not immediately validate or apply it.
@@ -123,7 +126,7 @@ class Form<FK extends Enum> extends Equatable {
   /// form = form.change(field: MyFormKeys.name, value: 'Jane Doe');
   /// print(form.changes[MyFormKeys.name]); // Output: Jane Doe
   /// ```
-  Form<FK> addChange(Change<FK> change) {
+  Form<FK> addChange(FieldChange<FK> change) {
     final newChanges = Map<FK, dynamic>.from(_changes);
     newChanges[change.field] = _fields
         .firstWhere((f) => f.name == change.field)
@@ -137,7 +140,7 @@ class Form<FK extends Enum> extends Equatable {
     );
   }
 
-  Form<FK> addChanges(List<Change<FK>> changes) {
+  Form<FK> addChanges(List<FieldChange<FK>> changes) {
     assert(changes.isNotEmpty, 'Changes should not be empty');
     return changes.fold(this, (form, change) => this.addChange(change));
   }
@@ -332,8 +335,8 @@ class Form<FK extends Enum> extends Equatable {
   }
 }
 
-class Change<FK> extends Equatable {
-  const Change(this.field, this.value);
+class FieldChange<FK> extends Equatable {
+  const FieldChange(this.field, this.value);
 
   final FK field;
 
@@ -345,7 +348,7 @@ class Change<FK> extends Equatable {
 
 class IsRequired<FK extends Enum> extends ValidationError<FK> {
   /// Creates an [IsRequired] error for the given [field].
-  IsRequired({required super.field});
+  const IsRequired({required super.field});
 
   @override
   String printable() {
@@ -553,7 +556,7 @@ class FieldDefinition<T, FK extends Enum> extends Equatable {
   ///   the input `change` is `null`.
   /// - [parser]: A function that converts a raw dynamic input value (typically
   ///   from user input) into the expected typed value `T`. This function is
-  ///   called only if validation passes.
+  ///   called by validation and and when the form is applied.
   /// - [validator]: An optional [Validator] function that performs custom
   ///   validation on the (potentially defaulted) parsed value.
   const FieldDefinition.raw({
